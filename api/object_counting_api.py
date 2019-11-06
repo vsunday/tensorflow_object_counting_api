@@ -498,37 +498,37 @@ def single_image_object_counting(input_video, detection_graph, category_index, i
             detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
             num_detections = detection_graph.get_tensor_by_name('num_detections:0')            
 
-       
-
-        input_frame = cv2.imread(input_video)
-
-        # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
-        image_np_expanded = np.expand_dims(input_frame, axis=0)
-
-        # Actual detection.
-        (boxes, scores, classes, num) = sess.run(
-            [detection_boxes, detection_scores, detection_classes, num_detections],
-            feed_dict={image_tensor: image_np_expanded})
-
-        # insert information text to video frame
-        font = cv2.FONT_HERSHEY_SIMPLEX
-
-        # Visualization of the results of a detection.        
-        counter, csv_line, counting_mode = vis_util.visualize_boxes_and_labels_on_single_image_array(1,input_frame,
-                                                                                              1,
-                                                                                              is_color_recognition_enabled,
-                                                                                              np.squeeze(boxes),
-                                                                                              np.squeeze(classes).astype(np.int32),
-                                                                                              np.squeeze(scores),
-                                                                                              category_index,
-                                                                                              use_normalized_coordinates=True,
-                                                                                              line_thickness=4)
-        if(len(counting_mode) == 0):
-            cv2.putText(input_frame, "...", (10, 35), font, 0.8, (0,255,255),2,cv2.FONT_HERSHEY_SIMPLEX)                       
-        else:
-            cv2.putText(input_frame, counting_mode, (10, 35), font, 0.8, (0,255,255),2,cv2.FONT_HERSHEY_SIMPLEX)
-        
-        cv2.imshow('tensorflow_object counting_api',input_frame)        
-        cv2.waitKey(0)
+           
+    
+            input_frame = cv2.imread(input_video)
+    
+            # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
+            image_np_expanded = np.expand_dims(input_frame, axis=0)
+    
+            # Actual detection.
+            (boxes, scores, classes, num) = sess.run(
+                [detection_boxes, detection_scores, detection_classes, num_detections],
+                feed_dict={image_tensor: image_np_expanded})
+    
+            # insert information text to video frame
+            font = cv2.FONT_HERSHEY_SIMPLEX
+    
+            # Visualization of the results of a detection.        
+            counter, csv_line, counting_mode = vis_util.visualize_boxes_and_labels_on_single_image_array(1,input_frame,
+                                                                                                  1,
+                                                                                                  is_color_recognition_enabled,
+                                                                                                  np.squeeze(boxes),
+                                                                                                  np.squeeze(classes).astype(np.int32),
+                                                                                                  np.squeeze(scores),
+                                                                                                  category_index,
+                                                                                                  use_normalized_coordinates=True,
+                                                                                                  line_thickness=4)
+            if(len(counting_mode) == 0):
+                cv2.putText(input_frame, "...", (10, 35), font, 0.8, (0,255,255),2,cv2.FONT_HERSHEY_SIMPLEX)                       
+            else:
+                cv2.putText(input_frame, counting_mode, (10, 35), font, 0.8, (0,255,255),2,cv2.FONT_HERSHEY_SIMPLEX)
+            
+            cv2.imshow('tensorflow_object counting_api',input_frame)        
+            cv2.waitKey(0)
 
         return counting_mode
