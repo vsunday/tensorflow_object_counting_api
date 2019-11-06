@@ -528,7 +528,11 @@ def single_image_object_counting(input_video, detection_graph, category_index, i
             else:
                 cv2.putText(input_frame, counting_mode, (10, 35), font, 0.8, (0,255,255),2,cv2.FONT_HERSHEY_SIMPLEX)
             
-            cv2.imshow('tensorflow_object counting_api',input_frame)        
+            try:
+              from google.colab.patches import cv2_imshow
+              cv2_imshow(input_frame)        
+            except ModuleNotFoundError:
+              cv2.imshow('tensorflow_object counting_api',input_frame)        
             cv2.waitKey(0)
 
         return counting_mode
